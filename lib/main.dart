@@ -1,10 +1,14 @@
 import 'package:addressbook_app_practice/pages/contact_details_page.dart';
 import 'package:addressbook_app_practice/pages/contact_list_page.dart';
 import 'package:addressbook_app_practice/pages/new_contact_page.dart';
+import 'package:addressbook_app_practice/provider/contact_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => ContactProvider() .. getAllContacts(),
+      child: const MyApp()));
 }
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

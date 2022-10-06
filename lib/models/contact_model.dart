@@ -33,7 +33,7 @@ class ContactModel {
         'website: $website}';
   }
 }
-  final contactList = <ContactModel>[
+  final contactListDB = <ContactModel>[
     ContactModel(
         id: 1,
         name: 'Shakib Al Hasan',

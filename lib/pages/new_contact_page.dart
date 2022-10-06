@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:addressbook_app_practice/models/contact_model.dart';
+import 'package:addressbook_app_practice/provider/contact_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class NewContactPage extends StatefulWidget {
   static const String routeName ='/new_contact';
@@ -232,8 +234,10 @@ class _NewContactPageState extends State<NewContactPage> {
 
     );
     print(contact);
-    contactList.add(contact);
-    Navigator.pop(context);
+    Provider.of<
+        ContactProvider>(context,listen: false).
+        addContact(contact);
+        Navigator.pop(context);
   }
 }
 
