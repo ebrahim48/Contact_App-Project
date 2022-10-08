@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:addressbook_app_practice/models/contact_model.dart';
 import 'package:addressbook_app_practice/provider/contact_provider.dart';
 import 'package:flutter/cupertino.dart';

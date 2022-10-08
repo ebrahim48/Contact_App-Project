@@ -8,6 +8,7 @@ class ContactModel {
   String? image;
   String? gender;
   String? website;
+  bool favorite;
 
   ContactModel({this.id,
     required this.name,
@@ -17,7 +18,8 @@ class ContactModel {
     this.dob,
     this.image,
     this.gender,
-    this.website});
+    this.website,
+    this.favorite = false});
 
   @override
   String toString() {
