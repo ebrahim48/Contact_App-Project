@@ -22,28 +22,45 @@ class _ContactListPageState extends State<ContactListPage> {
         title: const
         Text('Contact List'),
       ),
-
    body: Consumer<ContactProvider>(
      builder: (context,provider,_) => ListView.builder(
        itemCount: provider.contactList.length,
        itemBuilder: (context,index){
          final contact = provider.contactList[index];
-         return Card(
-           child: ListTile(
-             onTap: () =>
-                 Navigator.pushNamed(
-                     context,
-                     ContactDetailsPage.routeName,arguments: contact),
-             leading: CircleAvatar(
-               child: Text(contact.name.substring(0,2)),
+         return Dismissible(
+           key: UniqueKey(),
+           direction: DismissDirection.endToStart,
+           background: Container(
+             alignment: Alignment.center,
+             color: Colors.blue,
+             child: Icon(Icons.delete, size: 35, color: Colors.white,),
+           ),
+           confirmDismiss: showConfirmationDialog,
+           onDismissed: (direction) {
+             provider.deleteContact(contact);
+           },
+           child: Card(
+             child: ListTile(
+               onTap: () =>
+                   Navigator.pushNamed(
+                       context,
+                       ContactDetailsPage.routeName,arguments: contact),
+               leading: CircleAvatar(
+                 child: Text(contact.name.substring(0,2)),
+               ),
+               title: Text(contact.name),
+               trailing: IconButton(
+                 icon: Icon(contact.favorite ? Icons.favorite:Icons.favorite_border,color: Colors.red,),
+                 onPressed: () {
+                   provider.updateFavorite(index);
+                 },
+               ),
              ),
-             title: Text(contact.name),
            ),
          );
      }
      ),
    ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
             Navigator.pushNamed(
@@ -52,5 +69,25 @@ class _ContactListPageState extends State<ContactListPage> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+  Future<bool?>showConfirmationDialog(DismissDirection direction) {
+    return showDialog(context: context, builder: (context) => AlertDialog(
+      title: const Text('Delete'),
+      content: const Text('Sure to delete this item'),
+      actions: [
+        TextButton(
+            onPressed: () {
+              Navigator.pop(context,false);
+            },
+          child: const Text('CANCEL'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context,true);
+          },
+          child: const Text('YES'),
+        ),
+      ],
+    ));
   }
 }
